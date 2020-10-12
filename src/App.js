@@ -1,25 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Route, BrowserRouter as Router } from "react-router-dom";
+import Arkalogica from "./components/Arkalogica";
+import Login from "./components/Login";
+import { AuthContext } from "./context/auth";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
+  const existingTokens = JSON.parse(localStorage.getItem("tokens"));
+  const [authTokens, setAuthTokens] = useState(existingTokens);
+
+  const setTokens = (data) => {
+    localStorage.setItem("tokens", JSON.stringify(data));
+    setAuthTokens(data);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+      <Router>
+        <div>
+          <Route exact path="/" component={Login} />
+          <PrivateRoute path="/arkalogica" component={Arkalogica} />
+        </div>
+      </Router>
+    </AuthContext.Provider>
   );
 }
 
