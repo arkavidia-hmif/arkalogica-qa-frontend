@@ -1,17 +1,39 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useAuth } from "../context/auth";
+import axios from "axios";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isError, setIsError] = useState(false);
   const { setAuthTokens } = useAuth();
 
-  //PERLU DIGANTI LAGI, PAKE API LOGIN
   const postLogin = () => {
-    setAuthTokens("TESTOKEN12345");
-    setLoggedIn(true);
+    const instance = axios.create({
+      baseURL: "https://staging.api.arkavidia.id/api",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    instance
+      .post("/auth/login/", {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        if (res.data.token) {
+          setAuthTokens(res.data.token);
+          setLoggedIn(true);
+        } else {
+          setIsError(true);
+        }
+      })
+      .catch((e) => {
+        setIsError(true);
+      });
   };
 
   if (loggedIn) {
@@ -24,12 +46,12 @@ const Login = () => {
         <h2>Login</h2>
         <form>
           <div>
-            <label>Username </label>
+            <label>Email </label>
             <input
               type="text"
-              placeholder="Masukan username anda"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -44,6 +66,7 @@ const Login = () => {
           </div>
           <button onClick={postLogin}>Sign In</button>
         </form>
+        {isError && <p>The username or password provided were incorrect!</p>}
       </div>
     </div>
   );

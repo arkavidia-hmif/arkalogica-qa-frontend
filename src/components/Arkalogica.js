@@ -2,16 +2,12 @@ import React from "react";
 import { useAuth } from "../context/auth";
 
 const Arkalogica = () => {
-  const { setAuthTokens } = useAuth();
+  const { logOut } = useAuth();
 
-  //PERLU DIGANTI LAGI
-  const logout = () => {
-    setAuthTokens("");
-  };
   return (
     <div>
       <h1>Arkalogica</h1>
-      <button onClick={logout}>Logout</button>
+      <button onClick={logOut}>Logout</button>
     </div>
   );
 };
