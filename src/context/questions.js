@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
-import { createContext } from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
 import { useAuth } from "./auth";
 import { useFetch } from "../hooks";
-import { SESSION_PARAM } from "../constant";
+import { useHistory } from "react-router-dom";
+import { SESSION_PARAM, FE_ARKALOGICA_PARAM } from "../constant";
 
 export const QuestionContext = createContext();
 
@@ -57,22 +57,40 @@ const textQuestion = {
 };
 
 const QuestionContextProvider = ({ children }) => {
-  const [session, setSession] = useState(textQuestion || {});
-  //   const [submissions, setSubmissions] = useState({});
+  const history = useHistory();
   const { authTokens } = useAuth();
 
-  const sessionResponse = useFetch(authTokens, SESSION_PARAM);
-  //   const submissionsResponse = useFetch(submissions, SUBMISSIONS_PARAM);
+  const [session, setSession] = useState({});
+  const [isSessionStarted, setIsSessionStarted] = useState(false);
+  const [startFetch, setStartFetch] = useState(false);
+  const sessionResponse = useFetch(startFetch, SESSION_PARAM);
 
+  useEffect(() => console.log(isSessionStarted), [isSessionStarted]);
   useEffect(() => {
-    sessionResponse.error && console.log(sessionResponse.error);
-    if (sessionResponse.data) {
+    if (sessionResponse.error) {
+      // console.log(sessionResponse.error);
+      setSession(textQuestion);
+      setStartFetch(false);
+      return;
+    }
+    if (sessionResponse.data?.question) {
       setSession(sessionResponse.data);
+      setIsSessionStarted(true);
+      setStartFetch(false);
     }
   }, [sessionResponse, setSession]);
 
+  useEffect(() => {
+    authTokens &&
+      session?.title &&
+      session?.question &&
+      history.push(FE_ARKALOGICA_PARAM);
+  }, [authTokens, history, session]);
+
   return (
-    <QuestionContext.Provider value={{ session }}>
+    <QuestionContext.Provider
+      value={{ session, startFetch, setStartFetch, isSessionStarted }}
+    >
       {children}
     </QuestionContext.Provider>
   );

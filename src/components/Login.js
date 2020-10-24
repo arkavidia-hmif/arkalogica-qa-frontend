@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import axios from "axios";
+import { FE_HOMEPAGE_PARAM } from "../constant";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -37,7 +38,7 @@ const Login = () => {
   };
 
   if (loggedIn) {
-    return <Redirect to="/arkalogica" />;
+    return <Redirect to={FE_HOMEPAGE_PARAM} />;
   }
 
   return (

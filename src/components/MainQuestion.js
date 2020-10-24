@@ -7,7 +7,7 @@ export default () => {
   const { session } = useQuestion();
   const time = String(new Date(session?.endTime));
   return (
-    <div className="container mt-5">
+    <div className="container">
       <h1>{session?.title}</h1>
       <p className="font-weight-bold">End time: {time}</p>
       <p>{session?.description}</p>
