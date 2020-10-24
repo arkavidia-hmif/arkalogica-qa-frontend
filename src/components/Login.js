@@ -11,7 +11,8 @@ const Login = () => {
   const [isError, setIsError] = useState(false);
   const { setAuthTokens } = useAuth();
 
-  const postLogin = () => {
+  const postLogin = (e) => {
+    e.preventDefault();
     const instance = axios.create({
       baseURL: "https://staging.api.arkavidia.id/api",
       headers: {
@@ -32,7 +33,7 @@ const Login = () => {
           setIsError(true);
         }
       })
-      .catch((e) => {
+      .catch(() => {
         setIsError(true);
       });
   };
@@ -45,7 +46,7 @@ const Login = () => {
     <div>
       <div>
         <h2>Login</h2>
-        <form>
+        <form onSubmit={postLogin}>
           <div>
             <label>Email </label>
             <input
@@ -65,7 +66,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button onClick={postLogin}>Sign In</button>
+          <button>Sign In</button>
         </form>
         {isError && <p>The username or password provided were incorrect!</p>}
       </div>
