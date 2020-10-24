@@ -1,3 +1,10 @@
 body {
   margin-top: 1rem;
+  font-family: "Viga", sans-serif;
+}
+:root {
+  --primary: #431785;
+}
+img {
+  max-width: 300px;
 }

@@ -4,9 +4,10 @@ import { useQuestion } from "../context/questions";
 import { Link } from "react-router-dom";
 
 export default () => {
-  const { session } = useQuestion();
+  const { isSessionStarted, session } = useQuestion();
+
   const time = String(new Date(session?.endTime));
-  return (
+  return isSessionStarted ? (
     <div className="container">
       <h1>{session?.title}</h1>
       <p className="font-weight-bold">End time: {time}</p>
@@ -15,5 +16,10 @@ export default () => {
         Challenge
       </Link>
     </div>
+  ) : (
+    <>
+      <h1>Arkalogica Preliminary</h1>
+      Waiting
+    </>
   );
 };

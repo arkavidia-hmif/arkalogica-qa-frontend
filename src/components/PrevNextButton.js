@@ -1,26 +1,37 @@
 import React from "react";
-import { FE_ARKALOGICA_PARAM } from "../constant";
+import {
+  FE_ARKALOGICA_PARAM,
+  FE_ARKALOGICA_SUBMISSION_PARAM,
+} from "../constant";
 import { Link } from "react-router-dom";
 
-export default ({ number, totalQuestion }) => {
+export default ({ previousQuestionId, nextQuestionId }) => {
   return (
-    <>
-      {number !== 1 && (
+    <div className="justify-content-between d-flex mb-3">
+      {previousQuestionId && (
         <Link
-          to={`${FE_ARKALOGICA_PARAM}/${String(number - 1)}`}
-          className="btn btn-primary"
+          to={`${FE_ARKALOGICA_PARAM}/${previousQuestionId}`}
+          className="btn btn-outline-primary"
         >
           Previous
         </Link>
       )}
-      {number !== totalQuestion && (
+
+      {nextQuestionId ? (
         <Link
-          to={`${FE_ARKALOGICA_PARAM}/${String(number + 1)}`}
+          to={`${FE_ARKALOGICA_PARAM}/${nextQuestionId}`}
           className="btn btn-primary"
         >
           Next
         </Link>
+      ) : (
+        <Link
+          to={`${FE_ARKALOGICA_SUBMISSION_PARAM}`}
+          className="btn btn-primary"
+        >
+          Confirm submission
+        </Link>
       )}
-    </>
+    </div>
   );
 };
