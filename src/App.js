@@ -1,17 +1,26 @@
 import React from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
-import Arkalogica from "./components/Arkalogica";
-import Login from "./components/Login";
+import MainPage from "./components/Arkalogica";
+import QuestionPage from "./components/Question";
 import AuthContextProvider from "./context/auth";
-import PrivateRoute from "./PrivateRoute";
+import QuestionContextProvider from "./context/questions";
+import { FE_ARKALOGICA_PARAM } from "./constant";
+// import Login from "./components/Login";
+// import PrivateRoute from "./PrivateRoute";
 
 function App() {
   return (
     <AuthContextProvider>
-      <Router>
-        <Route exact path="/" component={Login} />
-        <PrivateRoute path="/arkalogica" component={Arkalogica} />
-      </Router>
+      <QuestionContextProvider>
+        <Router>
+          {/* <Route exact path="/" component={Login} /> */}
+          <Route exact path={FE_ARKALOGICA_PARAM} component={MainPage} />
+          <Route
+            path={FE_ARKALOGICA_PARAM + "/:questionNumber"}
+            component={QuestionPage}
+          />
+        </Router>
+      </QuestionContextProvider>
     </AuthContextProvider>
   );
 }
