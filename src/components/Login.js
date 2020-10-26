@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import axios from "axios";
+import { FE_HOMEPAGE_PARAM } from "../constant";
+import { useBoolean, useFormInput } from "../hooks";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [email, setEmail] = useFormInput();
+  const [password, setPassword] = useFormInput();
+  const { value: loggedIn, setTrue: setIsLoggedIn } = useBoolean(false);
+  const { value: isError, setTrue: setIsError } = useBoolean(false);
   const { setAuthTokens } = useAuth();
 
-  const postLogin = (event) => {
-    event.preventDefault();
+  const postLogin = (e) => {
+    e.preventDefault();
     const instance = axios.create({
       baseURL: "https://staging.api.arkavidia.id/api",
       headers: {
@@ -26,20 +28,19 @@ const Login = () => {
       })
       .then((res) => {
         if (res.data.token) {
-          console.log(res.data);
           setAuthTokens(res.data.token);
-          setLoggedIn(true);
+          setIsLoggedIn();
         } else {
-          setIsError(true);
+          setIsError();
         }
       })
-      .catch((e) => {
-        setIsError(true);
+      .catch(() => {
+        setIsError();
       });
   };
 
   if (loggedIn) {
-    return <Redirect to="/arkalogica" />;
+    return <Redirect to={FE_HOMEPAGE_PARAM} />;
   }
 
   return (
@@ -66,8 +67,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button type="submit">SUBMIT</button>
-          {/* <button onClick={postLogin}>Sign In</button> */}
+          <button>Sign In</button>
         </form>
         {isError && <p>The username or password provided were incorrect!</p>}
       </div>
