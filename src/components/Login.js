@@ -4,6 +4,7 @@ import { useAuth } from "../context/auth";
 import axios from "axios";
 import { FE_HOMEPAGE_PARAM } from "../constant";
 import { useBoolean, useFormInput } from "../hooks";
+import Countdown from "./Countdown";
 
 const Login = () => {
   const [email, setEmail] = useFormInput();
@@ -71,6 +72,7 @@ const Login = () => {
         </form>
         {isError && <p>The username or password provided were incorrect!</p>}
       </div>
+      <Countdown />
     </div>
   );
 };
