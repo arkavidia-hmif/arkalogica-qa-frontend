@@ -22,7 +22,6 @@ const QuestionContextProvider = ({ children }) => {
   const [answers, setAnswers] = useState({});
 
   const isSessionStarted = isValidTime(session?.startTime, session?.endTime);
-
   const sessionResponse = useFetch(SESSION_PARAM);
 
   useEffect(() => console.log(isSessionStarted), [isSessionStarted]);
@@ -37,7 +36,12 @@ const QuestionContextProvider = ({ children }) => {
     if (sessionResponse.data?.question) {
       setSession(sessionResponse.data);
     }
-  }, [session.question, sessionResponse, setSession]);
+  }, [
+    session.question,
+    sessionResponse.data,
+    sessionResponse.error,
+    setSession,
+  ]);
 
   const getQuestionDetail = useCallback(
     (questionId) => {

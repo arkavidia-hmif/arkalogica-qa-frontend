@@ -28,6 +28,7 @@ export const useFetch = (params, method = "get", body = {}) => {
   useEffect(() => {
     shouldFetch && doFetch();
   }, [doFetch, shouldFetch]);
+
   return { data, error, loading };
 };
 

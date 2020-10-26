@@ -12,7 +12,10 @@ export default () => {
       <h1>{session?.title}</h1>
       <p className="font-weight-bold">End time: {time}</p>
       <p>{session?.description}</p>
-      <Link to={FE_ARKALOGICA_PARAM + "/1"} className="btn btn-primary">
+      <Link
+        to={FE_ARKALOGICA_PARAM + "/" + String(session?.question[0]?.id)}
+        className="btn btn-primary"
+      >
         Challenge
       </Link>
     </div>
