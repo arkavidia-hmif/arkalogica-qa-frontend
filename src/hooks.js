@@ -1,6 +1,5 @@
 import { BACKEND_BASE_URL } from "./constant";
 import { useState, useCallback, useEffect } from "react";
-import { isBeforeTime, isBetweenTime } from "./utils";
 
 export const useFetch = (params, method = "get", body = {}) => {
   const [data, setData] = useState(null);
@@ -75,23 +74,3 @@ export const useBoolean = (initialValue) => {
 
   return { value, setTrue, setFalse };
 };
-
-// export const useCompetitionStatus = (start, end) => {
-//   const status = (startTime, endTime) => {
-//     if (isBeforeTime(startTime)) {
-//       return 0;
-//     } else if (isBetweenTime(startTime, endTime)) {
-//       return 1;
-//     } else {
-//       return 2;
-//     }
-//   };
-
-//   const [competitionStatus, setCompetitionStatus] = useState(
-//     status(start, end)
-//   );
-
-//   const setStatus = () => setCompetitionStatus(status(start, end));
-
-//   return [competitionStatus, setStatus];
-// };

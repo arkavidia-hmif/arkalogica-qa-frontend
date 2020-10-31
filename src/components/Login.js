@@ -5,6 +5,7 @@ import axios from "axios";
 import { FE_HOMEPAGE_PARAM } from "../constant";
 import { useBoolean, useFormInput } from "../hooks";
 import Countdown from "./Countdown";
+import AnswerPanel from "./AnswerPanel";
 
 const Login = () => {
   const [values, handleChange] = useFormInput({ email: "", password: "" });
@@ -74,6 +75,7 @@ const Login = () => {
         {isError && <p>The username or password provided were incorrect!</p>}
       </div>
       <Countdown />
+      <AnswerPanel />
     </div>
   );
 };
