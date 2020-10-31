@@ -1,5 +1,6 @@
 import { BACKEND_BASE_URL } from "./constant";
 import { useState, useCallback, useEffect } from "react";
+import { isBeforeTime, isBetweenTime } from "./utils";
 
 export const useFetch = (params, method = "get", body = {}) => {
   const [data, setData] = useState(null);
@@ -51,13 +52,16 @@ export const useMultipleChoice = (initialValue) => {
   return { value, onChange: handleChange };
 };
 
-export const useFormInput = () => {
-  const [value, setState] = useState("");
-  const setFormInput = (input) => {
-    setState(input);
+export const useFormInput = (initialValues) => {
+  const [values, setValues] = useState(initialValues);
+  const handleChange = (e) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  return [value, setFormInput];
+  return [values, handleChange];
 };
 
 export const useBoolean = (initialValue) => {
@@ -71,3 +75,23 @@ export const useBoolean = (initialValue) => {
 
   return { value, setTrue, setFalse };
 };
+
+// export const useCompetitionStatus = (start, end) => {
+//   const status = (startTime, endTime) => {
+//     if (isBeforeTime(startTime)) {
+//       return 0;
+//     } else if (isBetweenTime(startTime, endTime)) {
+//       return 1;
+//     } else {
+//       return 2;
+//     }
+//   };
+
+//   const [competitionStatus, setCompetitionStatus] = useState(
+//     status(start, end)
+//   );
+
+//   const setStatus = () => setCompetitionStatus(status(start, end));
+
+//   return [competitionStatus, setStatus];
+// };

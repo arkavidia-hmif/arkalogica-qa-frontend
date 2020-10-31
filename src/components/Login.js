@@ -7,8 +7,7 @@ import { useBoolean, useFormInput } from "../hooks";
 import Countdown from "./Countdown";
 
 const Login = () => {
-  const [email, setEmail] = useFormInput();
-  const [password, setPassword] = useFormInput();
+  const [values, handleChange] = useFormInput({ email: "", password: "" });
   const { value: loggedIn, setTrue: setIsLoggedIn } = useBoolean(false);
   const { value: isError, setTrue: setIsError } = useBoolean(false);
   const { setAuthTokens } = useAuth();
@@ -24,8 +23,8 @@ const Login = () => {
 
     instance
       .post("/auth/login/", {
-        email: email,
-        password: password,
+        email: values.email,
+        password: values.password,
       })
       .then((res) => {
         if (res.data.token) {
@@ -52,20 +51,22 @@ const Login = () => {
           <div>
             <label>Email </label>
             <input
+              name="email"
               type="text"
               placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={values.email}
+              onChange={handleChange}
               required
             />
           </div>
           <div>
             <label>Password</label>
             <input
+              name="password"
               type="password"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={values.password}
+              onChange={handleChange}
             />
           </div>
           <button>Sign In</button>

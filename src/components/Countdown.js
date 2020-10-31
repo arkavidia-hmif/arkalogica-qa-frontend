@@ -1,51 +1,60 @@
 import React, { useEffect, useRef, useState } from "react";
-import { isAfterTime, isBeforeTime, isBetweenTime } from "../utils";
+import { useCompetitionStatus } from "../hooks";
+import {
+  isAfterTime,
+  isBeforeTime,
+  isBetweenTime,
+  toDays,
+  toHours,
+  toMinutes,
+  toSeconds,
+} from "../utils";
+
+const arkalogicaStartDate = new Date(2020, 9, 31, 16, 17).getTime();
+const arkalogicaEndDate = new Date(2020, 9, 31, 16, 17, 10).getTime();
 
 const Countdown = () => {
-  const arkalogicaStartDate = new Date(2020, 9, 26, 18, 46).getTime();
-  const arkalogicaEndDate = new Date(2020, 9, 26, 18, 48).getTime();
-  const timeSpanArkalogica = arkalogicaEndDate - arkalogicaStartDate;
+  const status = (startTime, endTime) => {
+    if (isBeforeTime(startTime)) {
+      return 0;
+    } else if (isBetweenTime(startTime, endTime)) {
+      return 1;
+    } else {
+      return 2;
+    }
+  };
 
-  const [timerDays, setTimerDays] = useState("0");
-  const [timerHours, setTimerHours] = useState("0");
-  const [timerMinutes, setTimerMinutes] = useState("0");
-  const [timerSeconds, setTimerSeconds] = useState("0");
-  const [before, setBefore] = useState(isBeforeTime(arkalogicaStartDate));
-  const [between, setBetween] = useState(
-    isBetweenTime(arkalogicaStartDate, arkalogicaEndDate)
+  const statusText = (status) => {
+    if (status == 0) {
+      return <h3>Until arkalogica</h3>;
+    } else if (status == 1) {
+      return <h3>Time remaining</h3>;
+    } else {
+      return <h3>Time's up</h3>;
+    }
+  };
+
+  const [competitionStatus, setCompetitionStatus] = useState(
+    status(arkalogicaStartDate, arkalogicaEndDate)
   );
-  const [after, setAfter] = useState(isAfterTime(arkalogicaEndDate));
 
-  //   const { value: timesUp, setTrue: setIsTimesUp } = useBoolean(false);
-  //   const { value: arkalogica, setTrue: SetIsArkalogica } = useBoolean(false);
+  const [timer, setTimer] = useState(0);
 
   let interval = useRef();
 
   const startTimer = () => {
     interval = setInterval(() => {
+      setCompetitionStatus(status(arkalogicaStartDate, arkalogicaEndDate));
+      const end =
+        competitionStatus == 0 ? arkalogicaStartDate : arkalogicaEndDate;
       const now = new Date().getTime();
-      const trueDistance = arkalogicaEndDate - now;
-      const distance = trueDistance - (before ? timeSpanArkalogica : 0);
+      let distance = end - now;
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      if (trueDistance < 0) {
+      if (distance < 0 && competitionStatus == 2) {
         clearInterval(interval.current);
       } else {
-        setTimerDays(days);
-        setTimerHours(hours);
-        setTimerMinutes(minutes);
-        setTimerSeconds(seconds);
+        setTimer(distance);
       }
-
-      setBefore(isBeforeTime(arkalogicaStartDate));
-      setBetween(isBetweenTime(arkalogicaStartDate, arkalogicaEndDate));
-      setAfter(isAfterTime(arkalogicaEndDate));
     }, 1000);
   };
 
@@ -60,11 +69,11 @@ const Countdown = () => {
     <div>
       <h1>Countdown</h1>
       <h3>
-        {timerDays} : {timerHours} : {timerMinutes} : {timerSeconds}
+        {toDays(timer)} : {toHours(timer)} : {toMinutes(timer)} :
+        {toSeconds(timer)}
       </h3>
-      {before && <p>Until arkalogica</p>}
-      {between && <p>Tme Remaining</p>}
-      {after && <p>Time's up</p>}
+      <p>status = {competitionStatus}</p>
+      {statusText(competitionStatus)}
     </div>
   );
 };
