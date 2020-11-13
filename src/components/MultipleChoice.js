@@ -1,4 +1,5 @@
 import React from "react";
+import { submitAnswers } from "../api/answers";
 import { useQuestion } from "../context/questions";
 
 export default ({ choices, questionId }) => {
@@ -7,7 +8,7 @@ export default ({ choices, questionId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //submitkan
+    submitAnswers(e);
   };
 
   const handleChange = (e) =>
