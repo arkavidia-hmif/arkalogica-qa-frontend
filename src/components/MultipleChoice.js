@@ -8,7 +8,17 @@ export default ({ choices, questionId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    submitAnswers(e);
+    const data = submitAnswers(questionId, answer);
+    data.answer.map(({ question, tag }) => {
+      setAnswers((answers) => {
+        return {
+          ...answers,
+          ...JSON.parse(
+            `{${JSON.stringify(question)}: ${JSON.stringify(tag)}}`
+          ),
+        };
+      });
+    });
   };
 
   const handleChange = (e) =>

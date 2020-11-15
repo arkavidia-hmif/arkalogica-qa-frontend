@@ -1,8 +1,11 @@
-import axios from 'axios';
-import { SUBMISSIONS_PARAM, SUBMIT_ANSWERS_PARAM, BACKEND_BASE_URL } from '../constant'
+import axios from "axios";
+import {
+  SUBMISSIONS_PARAM,
+  SUBMIT_ANSWERS_PARAM,
+  BACKEND_BASE_URL,
+} from "../constant";
 
-export const submitAnswers = (e) => {
-  e.preventDefault();
+export const submitAnswers = (questionId, tag) => {
   const instance = axios.create({
     baseURL: BACKEND_BASE_URL,
     headers: {
@@ -12,15 +15,14 @@ export const submitAnswers = (e) => {
 
   instance
     .post(SUBMIT_ANSWERS_PARAM, {
-
+      questionId,
+      tag,
     })
     .then((res) => {
       return res.data;
     })
-    .catch(() => {
-      
-    });
-}
+    .catch(() => {});
+};
 
 export const getAllAnswers = (e) => {
   e.preventDefault();
@@ -36,7 +38,5 @@ export const getAllAnswers = (e) => {
     .then((res) => {
       return res.data;
     })
-    .catch(() => {
-      
-    });
-}
+    .catch(() => {});
+};
