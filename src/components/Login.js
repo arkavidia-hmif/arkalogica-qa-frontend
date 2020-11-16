@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import axios from "axios";
 import { FE_HOMEPAGE_PARAM } from "../constant";
-import { useBoolean, useFormInput } from "../hooks";
+import { useFormInput } from "../hooks";
 import Countdown from "./Countdown";
 import AnswerPanel from "./AnswerPanel";
 
 const Login = () => {
   const [values, handleChange] = useFormInput({ email: "", password: "" });
-  const { value: loggedIn, setTrue: setIsLoggedIn } = useBoolean(false);
-  const { value: isError, setTrue: setIsError } = useBoolean(false);
+  const [loggedIn, setIsLoggedIn] = useState(false);
+  const [isError, setIsError] = useState(false);
   const { setAuthTokens } = useAuth();
 
   const postLogin = (e) => {

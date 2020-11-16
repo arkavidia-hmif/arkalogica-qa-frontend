@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useCompetitionStatus } from "../hooks";
 import {
-  isAfterTime,
   isBeforeTime,
-  isBetweenTime,
+  isValidTime,
   toDays,
   toHours,
   toMinutes,
@@ -17,7 +15,7 @@ const Countdown = () => {
   const status = (startTime, endTime) => {
     if (isBeforeTime(startTime)) {
       return 0;
-    } else if (isBetweenTime(startTime, endTime)) {
+    } else if (isValidTime(startTime, endTime)) {
       return 1;
     } else {
       return 2;

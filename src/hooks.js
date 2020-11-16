@@ -62,15 +62,3 @@ export const useFormInput = (initialValues) => {
 
   return [values, handleChange];
 };
-
-export const useBoolean = (initialValue) => {
-  const [value, setState] = useState(initialValue);
-  const setTrue = () => {
-    setState(true);
-  };
-  const setFalse = () => {
-    setState(false);
-  };
-
-  return { value, setTrue, setFalse };
-};
