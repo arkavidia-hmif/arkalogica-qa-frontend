@@ -1,4 +1,5 @@
 import React from "react";
+import { submitAnswers } from "../api/answers";
 import { useQuestion } from "../context/questions";
 
 export default ({ choices, questionId }) => {
@@ -7,7 +8,17 @@ export default ({ choices, questionId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //submitkan
+    const data = submitAnswers(questionId, answer);
+    data.answer.map(({ question, tag }) => {
+      setAnswers((answers) => {
+        return {
+          ...answers,
+          ...JSON.parse(
+            `{${JSON.stringify(question)}: ${JSON.stringify(tag)}}`
+          ),
+        };
+      });
+    });
   };
 
   const handleChange = (e) =>

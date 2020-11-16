@@ -3,6 +3,8 @@ import { useQuestion } from "../context/questions";
 import PrevNextButton from "./PrevNextButton";
 import MultipleChoice from "./MultipleChoice";
 import Error from "./Error";
+import AnswerPanel from "./AnswerPanel";
+import Countdown from "./Countdown";
 
 export default ({ match }) => {
   const questionId = match?.params?.questionId;
@@ -33,23 +35,46 @@ export default ({ match }) => {
   return isSessionStarted && questionDetail?.detail ? (
     <div className="container">
       <h1>{questionDetail.detail.title}</h1>
-      {questionDetail.detail.images?.map((image) => (
-        <img
-          key={image.url}
-          id={image.url}
-          alt={questionDetail.detail.title}
-          src={image.url}
-        />
-      ))}
-      <p dangerouslySetInnerHTML={{ __html: questionDetail.detail.content }} />
-      <MultipleChoice
-        choices={questionDetail.detail.choices}
-        questionId={questionId}
-      />
+      <div className="row top-container">
+        <div className="col-4 top-left-container">
+          <Countdown />
+          <AnswerPanel />
+        </div>
+
+        <div className="col-8">
+          {questionDetail.detail.images?.map((image) => (
+            <img
+              key={image.url}
+              id={image.url}
+              alt={questionDetail.detail.title}
+              src={image.url}
+            />
+          ))}
+          <p
+            dangerouslySetInnerHTML={{ __html: questionDetail.detail.content }}
+          />
+          <MultipleChoice
+            choices={questionDetail.detail.choices}
+            questionId={questionId}
+          />
+        </div>
+      </div>
+
       <PrevNextButton
         previousQuestionId={questionDetail?.previousQuestionId}
         nextQuestionId={questionDetail?.nextQuestionId}
       />
+      <style jsx>
+        {`
+          .top-container {
+            margin: 1em 0;
+          }
+          .top-left-container {
+            background: #bfd8ff;
+            border-radius: 1em;
+          }
+        `}
+      </style>
     </div>
   ) : (
     <Error lastQuestionId={lastQuestionId} />

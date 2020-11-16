@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useQuestion } from "../context/questions";
 import {
   isBeforeTime,
   isValidTime,
@@ -8,10 +9,12 @@ import {
   toSeconds,
 } from "../utils";
 
-const arkalogicaStartDate = new Date(2020, 9, 31, 16, 17).getTime();
-const arkalogicaEndDate = new Date(2020, 9, 31, 16, 17, 10).getTime();
-
 const Countdown = () => {
+  const { session } = useQuestion();
+
+  const arkalogicaStartDate = Date.parse(session.startTime);
+  const arkalogicaEndDate = Date.parse(session.endTime);
+
   const status = (startTime, endTime) => {
     if (isBeforeTime(startTime)) {
       return 0;
@@ -23,12 +26,12 @@ const Countdown = () => {
   };
 
   const statusText = (status) => {
-    if (status == 0) {
-      return <h3>Until arkalogica</h3>;
-    } else if (status == 1) {
-      return <h3>Time remaining</h3>;
+    if (status === 0) {
+      return "Until arkalogica";
+    } else if (status === 1) {
+      return "Time remaining";
     } else {
-      return <h3>Time's up</h3>;
+      return "Time's up";
     }
   };
 
@@ -44,11 +47,11 @@ const Countdown = () => {
     interval = setInterval(() => {
       setCompetitionStatus(status(arkalogicaStartDate, arkalogicaEndDate));
       const end =
-        competitionStatus == 0 ? arkalogicaStartDate : arkalogicaEndDate;
+        competitionStatus === 0 ? arkalogicaStartDate : arkalogicaEndDate;
       const now = new Date().getTime();
       let distance = end - now;
 
-      if (distance < 0 && competitionStatus == 2) {
+      if (distance < 0 && competitionStatus === 2) {
         clearInterval(interval.current);
       } else {
         setTimer(distance);
@@ -65,13 +68,31 @@ const Countdown = () => {
 
   return (
     <div>
-      <h1>Countdown</h1>
-      <h3>
-        {toDays(timer)} : {toHours(timer)} : {toMinutes(timer)} :
-        {toSeconds(timer)}
-      </h3>
-      <p>status = {competitionStatus}</p>
-      {statusText(competitionStatus)}
+      <h3>Countdown</h3>
+      <div className="countdown-container">
+        <div className="countdown-content">
+          <h4>
+            {toDays(timer)} : {toHours(timer)} : {toMinutes(timer)} :
+            {toSeconds(timer)}
+          </h4>
+          {/* <p>status = {competitionStatus}</p> */}
+          <h4>{statusText(competitionStatus)}</h4>
+        </div>
+      </div>
+      <style jsx>
+        {`
+          .countdown-container {
+            background: #a8a8a8;
+            padding: 1em 0.8em;
+            border-radius: 1em;
+          }
+          .countdown-content {
+            background: #e3e3e3;
+            padding: 0.5em;
+            border-radius: 0.5em;
+          }
+        `}
+      </style>
     </div>
   );
 };
