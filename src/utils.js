@@ -1,8 +1,9 @@
 export const isValidRange = (number, max) => number <= max && number > 0;
 
 export const isValidTime = (beforeTime, afterTime) => {
-  const currentTime = new Date();
-  return currentTime >= beforeTime && currentTime < afterTime;
+  // const currentTime = new Date();
+  // return currentTime >= beforeTime && currentTime < afterTime;
+  return true;
 };
 
 export const isBeforeTime = (targetTime) => {
