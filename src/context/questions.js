@@ -21,7 +21,10 @@ const QuestionContextProvider = ({ children }) => {
   const [session, setSession] = useState(textQuestion);
   const [answers, setAnswers] = useState({});
 
-  const isSessionStarted = isValidTime(session?.startTime, session?.endTime);
+  const isSessionStarted = isValidTime(
+    Date.parse(session?.startTime),
+    Date.parse(session?.endTime)
+  );
   const sessionResponse = useFetch(SESSION_PARAM);
 
   useEffect(() => console.log(isSessionStarted), [isSessionStarted]);

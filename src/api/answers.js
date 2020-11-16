@@ -24,8 +24,7 @@ export const submitAnswers = (questionId, tag) => {
     .catch(() => {});
 };
 
-export const getAllAnswers = (e) => {
-  e.preventDefault();
+export const getAllAnswers = () => {
   const instance = axios.create({
     baseURL: BACKEND_BASE_URL,
     headers: {

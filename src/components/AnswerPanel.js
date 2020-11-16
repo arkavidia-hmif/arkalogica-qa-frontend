@@ -33,6 +33,7 @@ const AnswerPanel = () => {
         {questions.map((question) => {
           return (
             <div
+              key={question.id}
               className="col-2 answer-box"
               style={{
                 background: answers[`${question.id}`] ? "#79fc82" : "#e3e3e3",
