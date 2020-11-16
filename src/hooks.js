@@ -28,7 +28,6 @@ export const useFetch = (params, method = "get", body = {}) => {
   useEffect(() => {
     shouldFetch && doFetch();
   }, [doFetch, shouldFetch]);
-
   return { data, error, loading };
 };
 
@@ -50,4 +49,16 @@ export const useMultipleChoice = (initialValue) => {
     // setTagAnswer(questionId, e.target.value);
   };
   return { value, onChange: handleChange };
+};
+
+export const useFormInput = (initialValues) => {
+  const [values, setValues] = useState(initialValues);
+  const handleChange = (e) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  return [values, handleChange];
 };

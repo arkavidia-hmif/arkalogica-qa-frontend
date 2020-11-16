@@ -3,11 +3,13 @@ import { Redirect } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import axios from "axios";
 import { FE_HOMEPAGE_PARAM } from "../constant";
+import { useFormInput } from "../hooks";
+import Countdown from "./Countdown";
+import AnswerPanel from "./AnswerPanel";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [values, handleChange] = useFormInput({ email: "", password: "" });
+  const [loggedIn, setIsLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
   const { setAuthTokens } = useAuth();
 
@@ -22,19 +24,19 @@ const Login = () => {
 
     instance
       .post("/auth/login/", {
-        email: email,
-        password: password,
+        email: values.email,
+        password: values.password,
       })
       .then((res) => {
         if (res.data.token) {
           setAuthTokens(res.data.token);
-          setLoggedIn(true);
+          setIsLoggedIn();
         } else {
-          setIsError(true);
+          setIsError();
         }
       })
       .catch(() => {
-        setIsError(true);
+        setIsError();
       });
   };
 
@@ -50,26 +52,30 @@ const Login = () => {
           <div>
             <label>Email </label>
             <input
+              name="email"
               type="text"
               placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={values.email}
+              onChange={handleChange}
               required
             />
           </div>
           <div>
             <label>Password</label>
             <input
+              name="password"
               type="password"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={values.password}
+              onChange={handleChange}
             />
           </div>
           <button>Sign In</button>
         </form>
         {isError && <p>The username or password provided were incorrect!</p>}
       </div>
+      <Countdown />
+      <AnswerPanel />
     </div>
   );
 };
