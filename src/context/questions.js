@@ -6,8 +6,10 @@ import React, {
   useCallback,
 } from "react";
 import { useFetch, useLocalStorage } from "../hooks";
-import { SESSION_PARAM, textQuestion } from "../constant";
+import { SESSION_PARAM, SUBMISSIONS_PARAM, textQuestion } from "../constant";
 import { isValidTime } from "../utils";
+import useSWR from "swr";
+import { getAllAnswers } from "../api/answers";
 
 export const QuestionContext = createContext();
 
@@ -19,7 +21,33 @@ const QuestionContextProvider = ({ children }) => {
     ""
   );
   const [session, setSession] = useState(textQuestion);
+
+  const {
+    data: answerResp,
+    error: errorAnswerResp,
+    mutate: mutateAnswerResp,
+  } = useSWR(SUBMISSIONS_PARAM, getAllAnswers);
+
   const [answers, setAnswers] = useState({});
+
+  useEffect(() => {
+    if (answerResp) {
+      answerResp.answer.map(({ questionId, tag }) => {
+        setAnswers((answers) => {
+          return {
+            ...answers,
+            ...JSON.parse(
+              `{${JSON.stringify(questionId)}: {
+                ${JSON.stringify("tag")}: ${JSON.stringify(tag)},
+                ${JSON.stringify("submitted")}: ${true} 
+              }
+              }`
+            ),
+          };
+        });
+      });
+    }
+  }, [answerResp]);
 
   const isSessionStarted = isValidTime(
     Date.parse(session?.startTime),
@@ -75,6 +103,9 @@ const QuestionContextProvider = ({ children }) => {
         getQuestionDetail,
         answers,
         setAnswers,
+        answerResp,
+        errorAnswerResp,
+        mutateAnswerResp,
       }}
     >
       {children}
