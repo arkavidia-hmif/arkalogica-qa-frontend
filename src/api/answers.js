@@ -5,7 +5,7 @@ import {
   BACKEND_BASE_URL,
 } from "../constant";
 
-export const submitAnswers = (questionId, tag) => {
+export const submitAnswers = async (questionId, tag) => {
   const instance = axios.create({
     baseURL: BACKEND_BASE_URL,
     headers: {
@@ -13,7 +13,7 @@ export const submitAnswers = (questionId, tag) => {
     },
   });
 
-  instance
+  return await instance
     .post(SUBMIT_ANSWERS_PARAM, {
       questionId,
       tag,
@@ -21,10 +21,12 @@ export const submitAnswers = (questionId, tag) => {
     .then((res) => {
       return res.data;
     })
-    .catch(() => {});
+    .catch((e) => {
+      throw new Error("Error occured");
+    });
 };
 
-export const getAllAnswers = () => {
+export const getAllAnswers = async () => {
   const instance = axios.create({
     baseURL: BACKEND_BASE_URL,
     headers: {
@@ -32,10 +34,12 @@ export const getAllAnswers = () => {
     },
   });
 
-  instance
+  return await instance
     .get(SUBMISSIONS_PARAM)
     .then((res) => {
       return res.data;
     })
-    .catch(() => {});
+    .catch((e) => {
+      throw new Error("Error occured");
+    });
 };

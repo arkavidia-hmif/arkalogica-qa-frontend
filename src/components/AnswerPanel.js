@@ -26,6 +26,17 @@ const AnswerPanel = () => {
   const { answers, session } = useQuestion();
   const questions = session.question;
 
+  const getAnswerBoxBg = (id) => {
+    const ans = answers[`${id}`];
+    if (ans?.tag && ans?.submitted) {
+      return "#79fc82";
+    } else if (ans?.tag && !ans?.submitted) {
+      return "#f5c440";
+    } else {
+      return "#e3e3e3";
+    }
+  };
+
   return (
     <div>
       <h3>Answer Panel</h3>
@@ -36,7 +47,7 @@ const AnswerPanel = () => {
               key={question.id}
               className="col-2 answer-box"
               style={{
-                background: answers[`${question.id}`] ? "#79fc82" : "#e3e3e3",
+                background: getAnswerBoxBg(question.id),
               }}
             >
               <Link to={`${FE_ARKALOGICA_PARAM}/${question.id}`}>

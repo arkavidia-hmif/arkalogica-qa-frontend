@@ -5,22 +5,8 @@ import { useQuestion } from "../context/questions";
 // import { Link } from "react-router-dom";
 
 export default () => {
-  const { answers, setAnswers, isSessionStarted, session } = useQuestion();
+  const { answers, session, isSessionStarted } = useQuestion();
   const questions = session.question;
-
-  useEffect(() => {
-    // const data = getAllAnswers();
-    // data.answer.map(({ question, tag }) => {
-    //   setAnswers((answers) => {
-    //     return {
-    //       ...answers,
-    //       ...JSON.parse(
-    //         `{${JSON.stringify(question)}: ${JSON.stringify(tag)}}`
-    //       ),
-    //     };
-    //   });
-    // });
-  }, []);
 
   return isSessionStarted ? (
     <div className="container">

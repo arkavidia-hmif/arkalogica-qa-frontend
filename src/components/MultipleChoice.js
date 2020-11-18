@@ -1,24 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
+// import useSWR, { mutate } from "swr";
 import { submitAnswers } from "../api/answers";
+// import { SUBMIT_ANSWERS_PARAM } from "../constant";
 import { useQuestion } from "../context/questions";
 
 export default ({ choices, questionId }) => {
-  const { answers, setAnswers } = useQuestion();
-  const answer = answers[questionId];
+  const { answers, setAnswers, mutateAnswerResp } = useQuestion();
+  const answer = answers[questionId]?.tag;
+  const [error, setError] = useState();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = submitAnswers(questionId, answer);
-    data.answer.map(({ question, tag }) => {
-      setAnswers((answers) => {
-        return {
-          ...answers,
-          ...JSON.parse(
-            `{${JSON.stringify(question)}: ${JSON.stringify(tag)}}`
-          ),
-        };
-      });
-    });
+
+    try {
+      const res = await submitAnswers(questionId, answer);
+      mutateAnswerResp(res);
+      if (res.data) {
+        setAnswers((answers) => {
+          return {
+            ...answers,
+            ...JSON.parse(
+              `{${JSON.stringify(questionId)}: {
+                ${JSON.stringify("tag")}: ${JSON.stringify(answer)},
+                ${JSON.stringify("submitted")}: ${true} 
+              }
+              }`
+            ),
+          };
+        });
+      }
+    } catch (e) {
+      setError(e.message);
+    }
+
+    // data.answer.map(({ question, tag }) => {
+    //   setAnswers((answers) => {
+    //     return {
+    //       ...answers,
+    //       ...JSON.parse(
+    //         `{${JSON.stringify(question)}: ${JSON.stringify(tag)}}`
+    //       ),
+    //     };
+    //   });
+    // });
   };
 
   const handleChange = (e) =>
@@ -26,7 +50,11 @@ export default ({ choices, questionId }) => {
       return {
         ...answers,
         ...JSON.parse(
-          `{${JSON.stringify(questionId)}: ${JSON.stringify(e.target.value)}}`
+          `{${JSON.stringify(questionId)}: {
+            ${JSON.stringify("tag")}: ${JSON.stringify(e.target.value)},
+            ${JSON.stringify("submitted")}: ${false} 
+          }
+          }`
         ),
       };
     });
@@ -65,6 +93,7 @@ export default ({ choices, questionId }) => {
           <button className="btn btn-lg btn-primary text-center" type="submit">
             Submit
           </button>
+          {error && <h4>{error}</h4>}
         </div>
       </form>
     </div>
