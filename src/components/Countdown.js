@@ -67,7 +67,7 @@ const Countdown = () => {
   });
 
   return (
-    <div>
+    <div id="main">
       <h3>Countdown</h3>
       <div className="countdown-container">
         <div className="countdown-content">
@@ -81,13 +81,18 @@ const Countdown = () => {
       </div>
       <style jsx>
         {`
+          #main {
+            text-align: center;
+          }
+
           .countdown-container {
-            background: #a8a8a8;
+            background: #05386b;
             padding: 1em 0.8em;
             border-radius: 1em;
           }
           .countdown-content {
-            background: #e3e3e3;
+            background: #05386b;
+            color: #edf5e1;
             padding: 0.5em;
             border-radius: 0.5em;
           }
