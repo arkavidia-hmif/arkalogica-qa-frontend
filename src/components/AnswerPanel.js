@@ -51,8 +51,8 @@ const AnswerPanel = () => {
               }}
             >
               <Link to={`${FE_ARKALOGICA_PARAM}/${question.id}`}>
-                <p 
-                  className="answer-number" 
+                <p
+                  className="answer-number"
                   style={{
                     color: answers[`${question.id}`] ? "white" : "black",
                   }}
