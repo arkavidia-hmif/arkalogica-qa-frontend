@@ -38,7 +38,7 @@ const AnswerPanel = () => {
   };
 
   return (
-    <div id="main">
+    <div id="main-answer">
       <h3>Answer Panel</h3>
       <div className="row justify-content start answer-panel-container">
         {questions.map((question) => {
@@ -66,8 +66,9 @@ const AnswerPanel = () => {
       </div>
       <style jsx>
         {`
-          #main {
+          #main-answer {
             text-align: center;
+            margin-top: 2em;
           }
 
           .answer-panel-container {

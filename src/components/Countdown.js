@@ -67,7 +67,7 @@ const Countdown = () => {
   });
 
   return (
-    <div id="main">
+    <div id="main-countdown">
       <h3>Countdown</h3>
       <div className="countdown-container">
         <div className="countdown-content">
@@ -81,7 +81,7 @@ const Countdown = () => {
       </div>
       <style jsx>
         {`
-          #main {
+          #main-countdown {
             text-align: center;
           }
 
