@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 
 export default ({ previousQuestionId, nextQuestionId }) => {
   return (
-    <div className="justify-content-between d-flex mb-3">
+    <div className="row mb-3">
+      <div className="col-10">
       {previousQuestionId && (
         <Link
           to={`${FE_ARKALOGICA_PARAM}/${previousQuestionId}`}
@@ -16,7 +17,8 @@ export default ({ previousQuestionId, nextQuestionId }) => {
           Previous
         </Link>
       )}
-
+      </div>
+      <div className="col-2">
       {nextQuestionId ? (
         <Link
           to={`${FE_ARKALOGICA_PARAM}/${nextQuestionId}`}
@@ -29,9 +31,10 @@ export default ({ previousQuestionId, nextQuestionId }) => {
           to={`${FE_ARKALOGICA_SUBMISSION_PARAM}`}
           className="btn btn-primary"
         >
-          Confirm submission
+          Confirm
         </Link>
       )}
+      </div>
     </div>
   );
 };
