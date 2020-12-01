@@ -2,35 +2,33 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import axios from "axios";
-import { FE_HOMEPAGE_PARAM } from "../constant";
+import { BACKEND_BASE_URL, FE_ARKALOGICA_PARAM } from "../constant";
 import { useFormInput } from "../hooks";
-import Countdown from "./Countdown";
-import AnswerPanel from "./AnswerPanel";
+// import Countdown from "./Countdown";
+// import AnswerPanel from "./AnswerPanel";
 
 const Login = () => {
   const [values, handleChange] = useFormInput({ email: "", password: "" });
-  const [loggedIn, setIsLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
-  const { setAuthTokens } = useAuth();
+  const { setData, isLoggedIn } = useAuth();
 
   const postLogin = (e) => {
     e.preventDefault();
     const instance = axios.create({
-      baseURL: "https://staging.api.arkavidia.id/api",
+      baseURL: BACKEND_BASE_URL,
       headers: {
         "Content-Type": "application/json",
       },
     });
 
     instance
-      .post("/auth/login/", {
+      .post("auth/login/", {
         email: values.email,
         password: values.password,
       })
       .then((res) => {
-        if (res.data.token) {
-          setAuthTokens(res.data.token);
-          setIsLoggedIn();
+        if (res?.data) {
+          setData(res.data);
         } else {
           setIsError();
         }
@@ -40,9 +38,7 @@ const Login = () => {
       });
   };
 
-  if (loggedIn) {
-    return <Redirect to={FE_HOMEPAGE_PARAM} />;
-  }
+  if (isLoggedIn) return <Redirect to={FE_ARKALOGICA_PARAM} />;
 
   return (
     <div>

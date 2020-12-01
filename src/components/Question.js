@@ -36,7 +36,7 @@ export default ({ match }) => {
     <div className="container">
       <h1>{questionDetail.detail.title}</h1>
       <div className="row top-container">
-        <div className="col-lg-3 col-md-4 col-6 top-left-container">
+        <div className="col-lg-3 col-md-4 col-sm-12 top-left-container">
           <Countdown />
           <AnswerPanel />
         </div>

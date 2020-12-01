@@ -32,7 +32,7 @@ const QuestionContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (answerResp) {
-      answerResp.answer.map(({ questionId, tag }) => {
+      answerResp.answer.map(({ questionId, tag }) =>
         setAnswers((answers) => {
           return {
             ...answers,
@@ -44,8 +44,8 @@ const QuestionContextProvider = ({ children }) => {
               }`
             ),
           };
-        });
-      });
+        })
+      );
     }
   }, [answerResp]);
 

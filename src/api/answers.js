@@ -34,7 +34,7 @@ export const getAllAnswers = async () => {
     },
   });
 
-  return await instance
+  await instance
     .get(SUBMISSIONS_PARAM)
     .then((res) => {
       return res.data;

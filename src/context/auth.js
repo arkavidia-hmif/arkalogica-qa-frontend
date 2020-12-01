@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
+import { Redirect } from "react-router-dom";
+import { FE_LOGIN_PARAM } from "../constant";
 // import { Redirect } from "react-router-dom";
 
 export const AuthContext = createContext();
@@ -11,21 +13,38 @@ export function useAuth() {
 const AuthContextProvider = (props) => {
   const existingTokens = JSON.parse(localStorage.getItem("tokens"));
   const [authTokens, setAuthTokens] = useState(existingTokens);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    JSON.parse(localStorage.getItem("is_validated"))
+  );
+  const [authData, setAuthData] = useState({});
 
-  const setTokens = (data) => {
-    localStorage.setItem("tokens", JSON.stringify(data));
-    setAuthTokens(data);
+  const setData = (data) => {
+    setAuthData(data);
+    localStorage.setItem("tokens", JSON.stringify(data.token));
+    setAuthTokens(data.token);
+    setIsLoggedIn(true);
+    localStorage.setItem("is_validated", JSON.stringify(isLoggedIn));
   };
 
   const logOut = () => {
+    setAuthData({});
     localStorage.removeItem("tokens");
-    setAuthTokens();
+    localStorage.removeItem("is_validated");
+    setIsLoggedIn(false);
+    setAuthTokens("");
   };
 
   return (
     <AuthContext.Provider
-      value={{ authTokens, setAuthTokens: setTokens, logOut }}
+      value={{
+        authTokens,
+        authData,
+        setData,
+        logOut,
+        isLoggedIn,
+      }}
     >
+      {!isLoggedIn && <Redirect to={FE_LOGIN_PARAM} />}
       {props.children}
     </AuthContext.Provider>
   );
