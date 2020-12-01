@@ -38,11 +38,11 @@ const AnswerPanel = () => {
   };
 
   return (
-    <div id="main">
+    <div id="main-answer">
       <h3>Answer Panel</h3>
       <div className="row justify-content start answer-panel-container">
-        {questions.map((question) => {
-          return (
+        {questions.map((question) => (
+          <Link to={`${FE_ARKALOGICA_PARAM}/${question.id}`}>  
             <div
               key={question.id}
               className="col-1 answer-box"
@@ -50,24 +50,23 @@ const AnswerPanel = () => {
                 background: getAnswerBoxBg(question.id),
               }}
             >
-              <Link to={`${FE_ARKALOGICA_PARAM}/${question.id}`}>
-                <p
-                  className="answer-number"
-                  style={{
-                    color: answers[`${question.id}`] ? "white" : "black",
-                  }}
-                >
-                  {questions.indexOf(question) + 1}
-                </p>
-              </Link>
+              <p
+                className="answer-number"
+                style={{
+                  color: answers[`${question.id}`] ? "white" : "black",
+                }}
+              >
+                {questions.indexOf(question) + 1}
+              </p>
             </div>
-          );
-        })}
+          </Link>
+        ))}
       </div>
       <style jsx>
         {`
-          #main {
+          #main-answer {
             text-align: center;
+            margin-top: 2em;
           }
 
           .answer-panel-container {
@@ -85,6 +84,7 @@ const AnswerPanel = () => {
           }
 
           .answer-number {
+            padding: 0.5em 0 0.5em 0;
             text-align: center;
             color: black;
           }

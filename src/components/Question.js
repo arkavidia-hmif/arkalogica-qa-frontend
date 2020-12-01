@@ -36,12 +36,12 @@ export default ({ match }) => {
     <div className="container">
       <h1>{questionDetail.detail.title}</h1>
       <div className="row top-container">
-        <div className="col-3 top-left-container">
+        <div className="col-lg-3 col-md-4 col-6 top-left-container">
           <Countdown />
           <AnswerPanel />
         </div>
 
-        <div className="col-9">
+        <div className="col-lg-9">
           {questionDetail.detail.images?.map((image) => (
             <img
               key={image.url}
@@ -74,6 +74,12 @@ export default ({ match }) => {
             background: #5cdb95;
             border-radius: 1em;
             max-height: 50em;
+          }
+          @media screen and (max-width: 992px) {
+            .top-left-container {
+              align-items: center;
+              margin-bottom: 2em;
+            }
           }
         `}
       </style>
