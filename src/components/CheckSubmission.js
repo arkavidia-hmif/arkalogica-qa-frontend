@@ -17,7 +17,7 @@ export default () => {
               FE_ARKALOGICA_PARAM +
               String(session?.questions[session.questions.length - 1]?.id)
             }
-            className="btn btn-outline-primary"
+            className="btn arkav-btn-outline"
           >
             Previous
           </Link>
