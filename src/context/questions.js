@@ -6,8 +6,10 @@ import React, {
   useCallback,
 } from "react";
 import { useFetch, useLocalStorage } from "../hooks";
-import { SESSION_PARAM, SUBMISSIONS_PARAM, textQuestion } from "../constant";
+
+import { SESSION_PARAM, SUBMISSIONS_PARAM } from "../constant";
 import { isValidTime } from "../utils";
+import { useAuth } from "./auth";
 import useSWR from "swr";
 import { getAllAnswers } from "../api/answers";
 
@@ -16,59 +18,64 @@ export const QuestionContext = createContext();
 export const useQuestion = () => useContext(QuestionContext);
 
 const QuestionContextProvider = ({ children }) => {
+  const { authTokens, isLoggedIn } = useAuth();
   const [lastQuestionId, setLastQuestionId] = useLocalStorage(
     "lastQuestionId",
     ""
   );
-  const [session, setSession] = useState(textQuestion);
+  const [session, setSession] = useState({});
 
   const {
     data: answerResp,
     error: errorAnswerResp,
     mutate: mutateAnswerResp,
-  } = useSWR(SUBMISSIONS_PARAM, getAllAnswers);
+  } = useSWR(isLoggedIn ? SUBMISSIONS_PARAM : null, () =>
+    getAllAnswers(authTokens)
+  );
 
   const [answers, setAnswers] = useState({});
 
   useEffect(() => {
-    if (answerResp) {
-      answerResp.answer.map(({ questionId, tag }) =>
+    if (answerResp?.answers) {
+      answerResp.answers.map((answer) => {
         setAnswers((answers) => {
           return {
             ...answers,
             ...JSON.parse(
-              `{${JSON.stringify(questionId)}: {
-                ${JSON.stringify("tag")}: ${JSON.stringify(tag)},
-                ${JSON.stringify("submitted")}: ${true} 
+              `{${JSON.stringify(answer.question)}: {
+                ${JSON.stringify("tag")}: ${JSON.stringify(answer.tag)},
+                ${JSON.stringify("submitted")}: ${true}
               }
               }`
             ),
           };
-        })
-      );
+        });
+      });
     }
-  }, [answerResp]);
+  }, [isLoggedIn, answerResp, errorAnswerResp]);
 
-  const isSessionStarted = isValidTime(
-    Date.parse(session?.startTime),
-    Date.parse(session?.endTime)
-  );
+  const [isSessionStarted, setIsSessionStarted] = useState(false);
+
   const sessionResponse = useFetch(SESSION_PARAM);
-
-  useEffect(() => console.log(isSessionStarted), [isSessionStarted]);
 
   useEffect(() => {
     if (sessionResponse.error) return;
-    // {
-    //   // console.log(sessionResponse.error);
-    //   // setSession(textQuestion);
-    //   return;
-    // }
-    if (sessionResponse.data?.question) {
+
+    if (sessionResponse.data?.questions) {
+      setIsSessionStarted(
+        isValidTime(
+          Date.parse(session?.startTime),
+          Date.parse(session?.endTime)
+        )
+      );
+
       setSession(sessionResponse.data);
     }
   }, [
+    isLoggedIn,
     session.question,
+    session.endTime,
+    session.startTime,
     sessionResponse.data,
     sessionResponse.error,
     setSession,
@@ -76,8 +83,8 @@ const QuestionContextProvider = ({ children }) => {
 
   const getQuestionDetail = useCallback(
     (questionId) => {
-      if (session?.question) {
-        const questions = session.question;
+      if (session?.questions) {
+        const questions = session.questions;
         let data = {};
         for (let i = 0; i < questions.length; i++) {
           if (String(questions[i].id) === String(questionId)) {

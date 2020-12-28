@@ -31,11 +31,7 @@ function App() {
               exact
               component={CheckSubmissionPage}
             />
-            <Route
-              path={FE_ARKALOGICA_PARAM + "/:questionId"}
-              exact
-              component={QuestionPage}
-            />
+            <Route path={"/:questionId"} exact component={QuestionPage} />
           </Switch>
         </QuestionContextProvider>
       </AuthContextProvider>

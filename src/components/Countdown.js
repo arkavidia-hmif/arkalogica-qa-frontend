@@ -15,6 +15,8 @@ const Countdown = () => {
   const arkalogicaStartDate = Date.parse(session.startTime);
   const arkalogicaEndDate = Date.parse(session.endTime);
 
+  // console.log(session);
+
   const status = (startTime, endTime) => {
     if (isBeforeTime(startTime)) {
       return 0;
@@ -61,8 +63,9 @@ const Countdown = () => {
 
   useEffect(() => {
     startTimer();
+    const intervalCurrent = interval.current;
     return () => {
-      clearInterval(interval.current);
+      clearInterval(intervalCurrent);
     };
   });
 
@@ -79,19 +82,19 @@ const Countdown = () => {
           <h4>{statusText(competitionStatus)}</h4>
         </div>
       </div>
-      <style jsx>
+      <style>
         {`
           #main-countdown {
             text-align: center;
           }
 
           .countdown-container {
-            background: #05386b;
+            background: #fca7be;
             padding: 1em 0.8em;
             border-radius: 1em;
           }
           .countdown-content {
-            background: #05386b;
+            background: #fca7be;
             color: #edf5e1;
             padding: 0.5em;
             border-radius: 0.5em;

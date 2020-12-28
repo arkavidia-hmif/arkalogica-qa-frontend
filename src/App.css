@@ -8,3 +8,14 @@ body {
 img {
   max-width: 300px;
 }
+
+.arkav-btn {
+  color: white;
+  background: #fe789a;
+}
+
+.arkav-btn-outline {
+  color: #fe789a;
+  background-color: white;
+  border-color: #fe789a;
+}

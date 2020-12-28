@@ -8,7 +8,10 @@ import { useFormInput } from "../hooks";
 // import AnswerPanel from "./AnswerPanel";
 
 const Login = () => {
-  const [values, handleChange] = useFormInput({ email: "", password: "" });
+  const [values, handleChange] = useFormInput({
+    email: "admin@arkavidia.id",
+    password: "Arkavidia2021!",
+  });
   const [isError, setIsError] = useState(false);
   const { setData, isLoggedIn } = useAuth();
 
@@ -30,11 +33,11 @@ const Login = () => {
         if (res?.data) {
           setData(res.data);
         } else {
-          setIsError();
+          setIsError(true);
         }
       })
       .catch(() => {
-        setIsError();
+        setIsError(true);
       });
   };
 
@@ -67,12 +70,12 @@ const Login = () => {
                 onChange={handleChange}
               />
             </div>
-            <button className="btn-primary mt-3 btn-lg">Login</button>
+            <button className="btn arkav-btn mt-3 btn-lg">Login</button>
           </form>
         </div>
         {isError && <p>The username or password provided were incorrect!</p>}
       </div>
-      <style jsx>{`
+      <style>{`
         h2 {
           text-align: center;
         }
