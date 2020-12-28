@@ -24,14 +24,14 @@ const AnswerPanel = () => {
   // };
 
   const { answers, session } = useQuestion();
-  const questions = session.question;
+  const questions = session.questions;
 
   const getAnswerBoxBg = (id) => {
     const ans = answers[`${id}`];
     if (ans?.tag && ans?.submitted) {
-      return "#79fc82";
+      return "#57ba8c";
     } else if (ans?.tag && !ans?.submitted) {
-      return "#f5c440";
+      return "#eda84e";
     } else {
       return "#e3e3e3";
     }
@@ -41,8 +41,8 @@ const AnswerPanel = () => {
     <div id="main-answer">
       <h3>Answer Panel</h3>
       <div className="row justify-content start answer-panel-container">
-        {questions.map((question) => (
-          <Link to={`${FE_ARKALOGICA_PARAM}/${question.id}`}>  
+        {questions.map((question, id) => (
+          <Link key={id} to={FE_ARKALOGICA_PARAM + question.id}>
             <div
               key={question.id}
               className="col-1 answer-box"
@@ -62,7 +62,7 @@ const AnswerPanel = () => {
           </Link>
         ))}
       </div>
-      <style jsx>
+      <style>
         {`
           #main-answer {
             text-align: center;
@@ -70,7 +70,7 @@ const AnswerPanel = () => {
           }
 
           .answer-panel-container {
-            background: #05386b;
+            background: #fca7be;
             margin: 0;
             padding: 1em 0.5em;
             border-radius: 1em;

@@ -1,18 +1,25 @@
 import { BACKEND_BASE_URL } from "./constant";
 import { useState, useCallback, useEffect } from "react";
+import { useAuth } from "./context/auth";
 
 export const useFetch = (params, method = "get", body = {}) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [shouldFetch, setShouldFetch] = useState(true);
+  const { authTokens } = useAuth();
 
   const doFetch = useCallback(async () => {
     setLoading(true);
-    const requestData =
+    let requestData = {
+      headers: {
+        Authorization: `Bearer ${authTokens}`,
+      },
+    };
+    requestData =
       method.toLowerCase() === "get"
-        ? { method: "get" }
-        : { method: "post", body: JSON.stringify(body) };
+        ? { ...requestData, method: "get" }
+        : { ...requestData, method: "post", body: JSON.stringify(body) };
     try {
       const res = await fetch(BACKEND_BASE_URL + params, requestData);
       const json = await res.json();
@@ -23,7 +30,7 @@ export const useFetch = (params, method = "get", body = {}) => {
       setLoading(false);
       setShouldFetch(false);
     }
-  }, [method, params, body]);
+  }, [method, params, body, authTokens]);
 
   useEffect(() => {
     shouldFetch && doFetch();

@@ -9,7 +9,7 @@ export default ({ lastQuestionId }) => {
       <p className="lead">Waktumu ga banyak, jangan coba-coba!</p>
 
       <Link
-        to={`${FE_ARKALOGICA_PARAM}/${String(lastQuestionId)}`}
+        to={`${FE_ARKALOGICA_PARAM}${String(lastQuestionId)}`}
         className="btn btn-primary"
       >
         Balik dah ke soal tadi

@@ -1,24 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { getAllAnswers } from "../api/answers";
+import React from "react";
+import { Link } from "react-router-dom";
+import { FE_ARKALOGICA_PARAM } from "../constant";
 import { useQuestion } from "../context/questions";
-// import { FE_ARKALOGICA_PARAM } from "../constant";
-// import { Link } from "react-router-dom";
 
 export default () => {
-  const { answers, session, isSessionStarted } = useQuestion();
-  const questions = session.question;
+  const { isSessionStarted, session } = useQuestion();
 
   return isSessionStarted ? (
     <div className="container">
-      <h1>Your Answer</h1>
-      {questions.map((question) => {
-        return (
-          <p>
-            Question {questions.indexOf(question) + 1} :{" "}
-            {answers[`${question.id}`] || "Not yet answered"}
-          </p>
-        );
-      })}
+      <h2 className="text-center">You have reached the end of question</h2>
+
+      <div className="row mt-5">
+        <div className="col-10">
+          <Link
+            to={
+              FE_ARKALOGICA_PARAM +
+              String(session?.questions[session.questions.length - 1]?.id)
+            }
+            className="btn arkav-btn-outline"
+          >
+            Previous
+          </Link>
+        </div>
+      </div>
     </div>
   ) : (
     <div>Times up</div>
