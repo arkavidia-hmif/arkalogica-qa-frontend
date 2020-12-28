@@ -22,8 +22,8 @@ const AuthContextProvider = (props) => {
     setAuthData(data);
     localStorage.setItem("tokens", JSON.stringify(data.token));
     setAuthTokens(data.token);
+    localStorage.setItem("is_validated", JSON.stringify(true));
     setIsLoggedIn(true);
-    localStorage.setItem("is_validated", JSON.stringify(isLoggedIn));
   };
 
   const logOut = () => {
