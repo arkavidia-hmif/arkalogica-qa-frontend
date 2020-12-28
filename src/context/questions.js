@@ -37,7 +37,7 @@ const QuestionContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (answerResp?.answers) {
-      answerResp.answers.map((answer) => {
+      answerResp.answers.map((answer) =>
         setAnswers((answers) => {
           return {
             ...answers,
@@ -49,8 +49,8 @@ const QuestionContextProvider = ({ children }) => {
               }`
             ),
           };
-        });
-      });
+        })
+      );
     }
   }, [isLoggedIn, answerResp, errorAnswerResp]);
 

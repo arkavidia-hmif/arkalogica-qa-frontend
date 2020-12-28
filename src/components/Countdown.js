@@ -78,7 +78,6 @@ const Countdown = () => {
             {toDays(timer)} : {toHours(timer)} : {toMinutes(timer)} :
             {toSeconds(timer)}
           </h4>
-          {/* <p>status = {competitionStatus}</p> */}
           <h4>{statusText(competitionStatus)}</h4>
         </div>
       </div>

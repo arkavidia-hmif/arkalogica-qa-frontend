@@ -50,7 +50,6 @@ export default ({ choices, questionId }) => {
 
   return (
     <div>
-      {/* {console.log(authTokens)} */}
       <form onSubmit={handleSubmit}>
         {choices?.map((choice) => (
           <div className="radio" key={choice.tag}>
