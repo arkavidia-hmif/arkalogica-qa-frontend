@@ -48,6 +48,11 @@ export default ({ choices, questionId }) => {
       };
     });
 
+  const handleReset = async (e) => {
+    e.preventDefault();
+    console.log("reset");
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -79,8 +84,18 @@ export default ({ choices, questionId }) => {
           </div>
         ))}
         <div className="text-center">
-          <button className="btn btn-lg arkav-btn text-center" type="submit">
+          <button
+            className="btn btn-lg arkav-btn text-center"
+            type="submit"
+            disabled={answers[questionId]?.submitted}
+          >
             Submit
+          </button>
+          <button
+            className="btn btn-lg arkav-btn-outline text-center"
+            onClick={handleReset}
+          >
+            Reset
           </button>
           {error && <h4>{error}</h4>}
         </div>
