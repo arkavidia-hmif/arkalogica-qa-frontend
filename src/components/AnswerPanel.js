@@ -1,28 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FE_ARKALOGICA_PARAM } from "../constant";
-// import { textQuestion } from "../constant";
 import { useQuestion } from "../context/questions";
 
 const AnswerPanel = () => {
-  //   const questionId = textQuestion.question.map((question) => question.id);
-  // const size = 20;
-  // const questionId = [...Array(size).keys()].map((i) => i + 1);
-  // const answers = {
-  //   1: "b",
-  //   3: "c",
-  //   5: "c",
-  //   6: "c",
-  //   7: "c",
-  //   10: "c",
-  //   12: "c",
-  //   13: "c",
-  //   16: "c",
-  //   17: "c",
-  //   18: "c",
-  //   19: "c",
-  // };
-
   const { answers, session } = useQuestion();
   const questions = session.questions;
 
@@ -53,7 +34,8 @@ const AnswerPanel = () => {
               <p
                 className="answer-number"
                 style={{
-                  color: answers[`${question.id}`] ? "white" : "black",
+                  // color: answers[`${question.id}`] ? "white" : "black",
+                  color: "black",
                 }}
               >
                 {questions.indexOf(question) + 1}

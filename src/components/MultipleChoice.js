@@ -49,8 +49,29 @@ export default ({ choices, questionId }) => {
     });
 
   const handleReset = async (e) => {
+    const emptyAnswer = "";
+
     e.preventDefault();
-    console.log("reset");
+    try {
+      const res = await submitAnswers(questionId, emptyAnswer, authTokens);
+
+      if (res.answers) {
+        setAnswers((answers) => {
+          return {
+            ...answers,
+            ...JSON.parse(
+              `{${JSON.stringify(questionId)}: {
+                ${JSON.stringify("tag")}: ${JSON.stringify(emptyAnswer)},
+                ${JSON.stringify("submitted")}: ${true}
+              }
+              }`
+            ),
+          };
+        });
+      }
+    } catch (e) {
+      setError(e.message);
+    }
   };
 
   return (
