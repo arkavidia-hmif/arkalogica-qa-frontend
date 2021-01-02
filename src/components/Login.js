@@ -9,8 +9,8 @@ import { useFormInput } from "../hooks";
 
 const Login = () => {
   const [values, handleChange] = useFormInput({
-    email: "admin@arkavidia.id",
-    password: "Arkavidia2021!",
+    email: "",
+    password: ""
   });
   const [isError, setIsError] = useState(false);
   const { setData, isLoggedIn } = useAuth();
