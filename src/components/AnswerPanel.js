@@ -28,7 +28,7 @@ const AnswerPanel = ({ selected }) => {
       <h3>Answer Panel</h3>
       <div className="row justify-content-between answer-panel-container m-0">
         {questions.map((question, id) => (
-          <Link key={id} to={FE_ARKALOGICA_PARAM + question.id}>
+          <Link key={id} to={FE_ARKALOGICA_PARAM + question.id} style={{ textDecoration: "none" }}>
             <div
               key={question.id}
               className="answer-box py-2 px-3 my-1"
@@ -64,11 +64,16 @@ const AnswerPanel = ({ selected }) => {
 
           .answer-box {
             border-radius: 0.3em;
+            transition: background-color 0.1s ease-in;
           }
-
+          
           .answer-number {
             text-align: center;
             color: black;
+          }
+
+          .answer-box:hover {
+            background-color: #62CCF2 !important;
           }
         `}
       </style>
