@@ -19,8 +19,25 @@ img {
   background: #fe789a;
 }
 
+.arkav-btn:hover {
+  color: white;
+  background: #f8afc1;
+}
+
+.arkav-btn:disabled {
+  color: white;
+  background: lightgray;
+  cursor: default;
+}
+
 .arkav-btn-outline {
   color: #fe789a;
   background-color: white;
   border-color: #fe789a;
+}
+
+.arkav-btn-outline:hover {
+  color: white;
+  background-color: #f8afc1;
+  border-color: white;
 }
