@@ -39,17 +39,22 @@ export default ({ match }) => {
         </div>
 
         <div className="col-lg-9">
-          {questionDetail.detail.questionImages?.map((imageUrl) => (
-            <img
-              key={imageUrl}
-              id={imageUrl}
-              alt={questionDetail.detail.title}
-              src={imageUrl}
-            />
-          ))}
+          <h2>Pertanyaan</h2>
+          <div className=" d-flex flex-row align-items-center justify-content-around flex-wrap">
+            {questionDetail.detail.questionImages?.map((imageUrl) => (
+              <img
+                key={imageUrl}
+                id={imageUrl}
+                alt={questionDetail.detail.title}
+                src={imageUrl}
+              />
+            ))}
+          </div>
           <p
+            className="text-justify"
             dangerouslySetInnerHTML={{ __html: questionDetail.detail.content }}
           />
+          <h2 className="mt-5" >Pilihan Jawaban</h2>
           <MultipleChoice
             choices={questionDetail.detail.choices}
             questionId={questionId}
