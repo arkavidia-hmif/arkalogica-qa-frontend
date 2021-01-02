@@ -14,9 +14,11 @@ export default () => {
   const time = String(new Date(session?.endTime));
   return (
     <div>
-      <Logout />
       {isSessionStarted && isLoggedIn ? (
         <div className="container">
+          <div className="row">
+            <Logout />
+          </div>
           <div className="row">
             <div className="col-lg-3 col-md-4 col-sm-12 top-left-container">
               <Countdown />
@@ -52,18 +54,22 @@ export default () => {
           </style>
         </div>
       ) : (
-        <>
-          <h1 className="mainquestion-title">Arkalogica Preliminary</h1>
-          <h3 className="mainquestion-title">Waiting ...</h3>
-          <style>
-            {`
-          .mainquestion-title {
-            text-align: center;
-          }
-        `}
-          </style>
-        </>
-      )}
+          <div className="container">
+            <div className="row">
+              <Logout />
+            </div>
+            <h1 className="mainquestion-title">Arkalogica Preliminary</h1>
+            <h3 className="mainquestion-title">Waiting ...</h3>
+            <style>
+              {`
+                .mainquestion-title {
+                  text-align: center;
+                }
+              `}
+            </style>
+
+          </div>
+        )}
     </div>
   );
 };
