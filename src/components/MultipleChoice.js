@@ -104,7 +104,7 @@ export default ({ choices, questionId }) => {
             </label>
           </div>
         ))}
-        <div className="text-center">
+        <div className="text-center mt-5">
           <button
             className="btn btn-lg arkav-btn text-center"
             type="submit"
@@ -113,7 +113,7 @@ export default ({ choices, questionId }) => {
             Submit
           </button>
           <button
-            className="btn btn-lg arkav-btn-outline text-center"
+            className="btn btn-lg arkav-btn-outline text-center ml-3"
             onClick={handleReset}
           >
             Reset
