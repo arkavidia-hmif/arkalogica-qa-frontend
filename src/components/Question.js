@@ -75,7 +75,7 @@ export default ({ match }) => {
             padding: 1em;
             background: #ffd1dd;
             border-radius: 1em;
-            max-height: 50em;
+            height: min-content;
           }
           @media screen and (max-width: 992px) {
             .top-left-container {
