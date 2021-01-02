@@ -3,12 +3,17 @@ import { Link } from "react-router-dom";
 import { FE_ARKALOGICA_PARAM } from "../constant";
 import { useQuestion } from "../context/questions";
 
-const AnswerPanel = () => {
+const AnswerPanel = ({ selected }) => {
   const { answers, session } = useQuestion();
   const questions = session.questions;
 
   const getAnswerBoxBg = (id) => {
     const ans = answers[`${id}`];
+
+    if (selected && selected === id) {
+      return "#62CCF2";
+    }
+
     if (ans?.tag && ans?.submitted) {
       return "#57ba8c";
     } else if (ans?.tag && !ans?.submitted) {
@@ -38,7 +43,7 @@ const AnswerPanel = () => {
                   color: "black",
                 }}
               >
-                {questions.indexOf(question) + 1}
+                {id + 1}
               </p>
             </div>
           </Link>

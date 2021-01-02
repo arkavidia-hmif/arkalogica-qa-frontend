@@ -35,7 +35,7 @@ export default ({ match }) => {
       <div className="row top-container">
         <div className="col-lg-3 col-md-4 col-sm-12 top-left-container">
           <Countdown />
-          <AnswerPanel />
+          <AnswerPanel selected={questionId} />
         </div>
 
         <div className="col-lg-9">
@@ -82,6 +82,6 @@ export default ({ match }) => {
       </style>
     </div>
   ) : (
-    <Error lastQuestionId={lastQuestionId} />
-  );
+      <Error lastQuestionId={lastQuestionId} />
+    );
 };
