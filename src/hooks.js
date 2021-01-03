@@ -10,25 +10,27 @@ export const useFetch = (params, method = "get", body = {}) => {
   const { authTokens } = useAuth();
 
   const doFetch = useCallback(async () => {
-    setLoading(true);
-    let requestData = {
-      headers: {
-        Authorization: `Bearer ${authTokens}`,
-      },
-    };
-    requestData =
-      method.toLowerCase() === "get"
-        ? { ...requestData, method: "get" }
-        : { ...requestData, method: "post", body: JSON.stringify(body) };
-    try {
-      const res = await fetch(BACKEND_BASE_URL + params, requestData);
-      const json = await res.json();
-      setData(json);
-    } catch (e) {
-      setError(e);
-    } finally {
-      setLoading(false);
-      setShouldFetch(false);
+    if (authTokens) {
+      setLoading(true);
+      let requestData = {
+        headers: {
+          Authorization: `Bearer ${authTokens}`,
+        },
+      };
+      requestData =
+        method.toLowerCase() === "get"
+          ? { ...requestData, method: "get" }
+          : { ...requestData, method: "post", body: JSON.stringify(body) };
+      try {
+        const res = await fetch(BACKEND_BASE_URL + params, requestData);
+        const json = await res.json();
+        setData(json);
+      } catch (e) {
+        setError(e);
+      } finally {
+        setLoading(false);
+        setShouldFetch(false);
+      }
     }
   }, [method, params, body, authTokens]);
 

@@ -68,7 +68,6 @@ const QuestionContextProvider = ({ children }) => {
           Date.parse(session?.endTime)
         )
       );
-
       setSession(sessionResponse.data);
     }
   }, [

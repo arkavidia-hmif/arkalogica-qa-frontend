@@ -15,8 +15,6 @@ const Countdown = () => {
   const arkalogicaStartDate = Date.parse(session.startTime);
   const arkalogicaEndDate = Date.parse(session.endTime);
 
-  // console.log(session);
-
   const status = (startTime, endTime) => {
     if (isBeforeTime(startTime)) {
       return 0;
