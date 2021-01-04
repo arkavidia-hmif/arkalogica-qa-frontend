@@ -5,7 +5,7 @@ import { useQuestion } from "../context/questions";
 
 export default ({ choices, questionId }) => {
   const { authTokens } = useAuth();
-  const { answers, setAnswers } = useQuestion();
+  const { answers, setAnswers, isTimesUp } = useQuestion();
   const answer = answers[questionId]?.tag;
   const [error, setError] = useState();
 
@@ -108,13 +108,14 @@ export default ({ choices, questionId }) => {
           <button
             className="btn btn-lg arkav-btn text-center"
             type="submit"
-            disabled={answers[questionId]?.submitted}
+            disabled={answers[questionId]?.submitted || isTimesUp}
           >
             Submit
           </button>
           <button
             className="btn btn-lg arkav-btn-outline text-center ml-3"
             onClick={handleReset}
+            disabled={isTimesUp}
           >
             Reset
           </button>

@@ -10,7 +10,7 @@ import { useFormInput } from "../hooks";
 const Login = () => {
   const [values, handleChange] = useFormInput({
     email: "",
-    password: ""
+    password: "",
   });
   const [isError, setIsError] = useState(false);
   const { setData, isLoggedIn } = useAuth();
