@@ -54,7 +54,7 @@ export default ({ match }) => {
             className="text-justify"
             dangerouslySetInnerHTML={{ __html: questionDetail.detail.content }}
           />
-          <h2 className="mt-5" >Pilihan Jawaban</h2>
+          <h2 className="mt-5">Pilihan Jawaban</h2>
           <MultipleChoice
             choices={questionDetail.detail.choices}
             questionId={questionId}
@@ -87,6 +87,6 @@ export default ({ match }) => {
       </style>
     </div>
   ) : (
-      <Error lastQuestionId={lastQuestionId} />
-    );
+    <Error lastQuestionId={lastQuestionId} />
+  );
 };

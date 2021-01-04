@@ -46,3 +46,9 @@ img {
   background-color: #f8afc1;
   border-color: white;
 }
+
+@media screen and (min-width: 1300px) {
+  .container {
+    max-width: 1250px;
+  }
+}

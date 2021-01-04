@@ -54,22 +54,21 @@ export default () => {
           </style>
         </div>
       ) : (
-          <div className="container">
-            <div className="row">
-              <Logout />
-            </div>
-            <h1 className="mainquestion-title">Arkalogica Preliminary</h1>
-            <h3 className="mainquestion-title">Waiting ...</h3>
-            <style>
-              {`
+        <div className="container">
+          <div className="row">
+            <Logout />
+          </div>
+          <h1 className="mainquestion-title">Arkalogica Preliminary</h1>
+          <h3 className="mainquestion-title">Waiting ...</h3>
+          <style>
+            {`
                 .mainquestion-title {
                   text-align: center;
                 }
               `}
-            </style>
-
-          </div>
-        )}
+          </style>
+        </div>
+      )}
     </div>
   );
 };

@@ -92,7 +92,7 @@ const Countdown = () => {
           }
           .countdown-content {
             background: #fca7be;
-            color: #edf5e1;
+            color: black;
             padding: 0.5em;
             border-radius: 0.5em;
           }

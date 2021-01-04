@@ -1,4 +1,5 @@
-export const BACKEND_BASE_URL = process.env.REACT_APP_BACKEND_URL || "https://staging.api.arkavidia.id/api/";
+export const BACKEND_BASE_URL =
+  process.env.REACT_APP_BACKEND_URL || "https://staging.api.arkavidia.id/api/";
 
 export const LOGIN_PARAM = "login";
 export const SESSION_PARAM = "arkalogica/2";
