@@ -6,9 +6,10 @@ import Countdown from "./Countdown";
 import AnswerPanel from "./AnswerPanel";
 import { useAuth } from "../context/auth";
 import Logout from "./Logout";
+import Spinner from "./Spinner";
 
 export default () => {
-  const { isSessionStarted, session } = useQuestion();
+  const { isSessionStarted, session, isTimesUp } = useQuestion();
   const { isLoggedIn } = useAuth();
 
   const time = String(new Date(session?.endTime));
@@ -30,7 +31,9 @@ export default () => {
               <p>{session?.description}</p>
               <Link
                 to={FE_ARKALOGICA_PARAM + String(session?.questions[0]?.id)}
-                className="btn arkav-btn"
+                className={"btn arkav-btn ".concat(
+                  isTimesUp ? "a-disabled" : ""
+                )}
               >
                 Challenge
               </Link>
@@ -54,22 +57,22 @@ export default () => {
           </style>
         </div>
       ) : (
-          <div className="container">
-            <div className="row">
-              <Logout />
-            </div>
-            <h1 className="mainquestion-title">Arkalogica Preliminary</h1>
-            <h3 className="mainquestion-title">Waiting ...</h3>
-            <style>
-              {`
+        <div className="container">
+          <div className="row">
+            <Logout />
+          </div>
+          <h1 className="mainquestion-title">Arkalogica Preliminary</h1>
+          <h3 className="mainquestion-title">Waiting ...</h3>
+          <Spinner />
+          <style>
+            {`
                 .mainquestion-title {
                   text-align: center;
                 }
               `}
-            </style>
-
-          </div>
-        )}
+          </style>
+        </div>
+      )}
     </div>
   );
 };

@@ -55,6 +55,7 @@ const QuestionContextProvider = ({ children }) => {
   }, [isLoggedIn, answerResp, errorAnswerResp]);
 
   const [isSessionStarted, setIsSessionStarted] = useState(false);
+  const [isTimesUp, setIsTimesUp] = useState(false);
 
   const sessionResponse = useFetch(SESSION_PARAM);
 
@@ -104,6 +105,8 @@ const QuestionContextProvider = ({ children }) => {
       value={{
         session,
         isSessionStarted,
+        isTimesUp,
+        setIsTimesUp,
         lastQuestionId,
         setLastQuestionId,
         getQuestionDetail,

@@ -10,7 +10,7 @@ import {
 } from "../utils";
 
 const Countdown = () => {
-  const { session } = useQuestion();
+  const { session, setIsTimesUp } = useQuestion();
 
   const arkalogicaStartDate = Date.parse(session.startTime);
   const arkalogicaEndDate = Date.parse(session.endTime);
@@ -49,10 +49,11 @@ const Countdown = () => {
       const end =
         competitionStatus === 0 ? arkalogicaStartDate : arkalogicaEndDate;
       const now = new Date().getTime();
-      let distance = end - now;
+      let distance = end - now <= 0 ? 0 : end - now;
 
-      if (distance < 0 && competitionStatus === 2) {
+      if (distance <= 0 && competitionStatus === 2) {
         clearInterval(interval.current);
+        setIsTimesUp(true);
       } else {
         setTimer(distance);
       }

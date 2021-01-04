@@ -46,3 +46,8 @@ img {
   background-color: #f8afc1;
   border-color: white;
 }
+
+.a-disabled {
+  pointer-events: none;
+  cursor: default;
+}
