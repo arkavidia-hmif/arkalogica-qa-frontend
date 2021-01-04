@@ -5,7 +5,7 @@ import { useQuestion } from "../context/questions";
 
 export default ({ choices, questionId }) => {
   const { authTokens } = useAuth();
-  const { answers, setAnswers } = useQuestion();
+  const { answers, setAnswers, isTimesUp } = useQuestion();
   const answer = answers[questionId]?.tag;
   const [error, setError] = useState();
 
@@ -85,6 +85,7 @@ export default ({ choices, questionId }) => {
                 value={choice.tag}
                 checked={String(answer) === String(choice.tag)}
                 onChange={handleChange}
+                disabled={isTimesUp}
               />{" "}
               <span
                 className={
@@ -104,22 +105,27 @@ export default ({ choices, questionId }) => {
             </label>
           </div>
         ))}
-        <div className="text-center mt-5">
-          <button
-            className="btn btn-lg arkav-btn text-center"
-            type="submit"
-            disabled={answers[questionId]?.submitted}
-          >
-            Submit
-          </button>
-          <button
-            className="btn btn-lg arkav-btn-outline text-center ml-3"
-            onClick={handleReset}
-          >
-            Reset
-          </button>
-          {error && <h4>{error}</h4>}
-        </div>
+        {!isTimesUp && (
+          <div className="text-center mt-5">
+            <button
+              className="btn btn-lg arkav-btn text-center"
+              type="submit"
+              disabled={answers[questionId]?.submitted || isTimesUp}
+            >
+              Submit
+            </button>
+            <button
+              className={`btn btn-lg arkav-btn-outline text-center ml-3 ${
+                isTimesUp ? "a-disabled" : ""
+              }`}
+              onClick={handleReset}
+              disabled={isTimesUp}
+            >
+              Reset
+            </button>
+            {error && <h4>{error}</h4>}
+          </div>
+        )}
       </form>
     </div>
   );

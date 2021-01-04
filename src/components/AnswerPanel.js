@@ -87,6 +87,8 @@ const AnswerPanel = ({ selected }) => {
           .answer-box:hover {
             background-color: #62CCF2 !important;
           }
+
+
         `}
       </style>
     </div>

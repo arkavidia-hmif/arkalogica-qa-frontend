@@ -7,8 +7,6 @@ export const isValidTime = (beforeTime, afterTime) => {
 
 export const isBeforeTime = (targetTime) => {
   const currentTime = new Date().getTime();
-  // console.log(currentTime);
-  // console.log(targetTime);
   return currentTime < targetTime;
 };
 

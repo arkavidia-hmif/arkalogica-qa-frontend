@@ -25,8 +25,6 @@ export const submitAnswers = async (questionId, tag, authTokens) => {
       return res.data;
     })
     .catch((e) => {
-      console.log(authTokens);
-      console.log(data);
       console.log(e);
       throw new Error("Error occured");
     });

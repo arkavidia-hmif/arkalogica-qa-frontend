@@ -1,6 +1,7 @@
 import { BACKEND_BASE_URL } from "./constant";
 import { useState, useCallback, useEffect } from "react";
 import { useAuth } from "./context/auth";
+import axios from "axios";
 
 export const useFetch = (params, method = "get", body = {}) => {
   const [data, setData] = useState(null);
@@ -12,27 +13,22 @@ export const useFetch = (params, method = "get", body = {}) => {
   const doFetch = useCallback(async () => {
     if (authTokens) {
       setLoading(true);
-      let requestData = {
+      const requestData = {
         headers: {
           Authorization: `Bearer ${authTokens}`,
         },
       };
-      requestData =
-        method.toLowerCase() === "get"
-          ? { ...requestData, method: "get" }
-          : { ...requestData, method: "post", body: JSON.stringify(body) };
       try {
-        const res = await fetch(BACKEND_BASE_URL + params, requestData);
-        const json = await res.json();
-        setData(json);
+        const res = await axios.get(BACKEND_BASE_URL + params, requestData);
+        setData(res.data);
       } catch (e) {
-        setError(e);
+        setError(e.response.data);
       } finally {
         setLoading(false);
         setShouldFetch(false);
       }
     }
-  }, [method, params, body, authTokens]);
+  }, [params, authTokens]);
 
   useEffect(() => {
     shouldFetch && doFetch();
